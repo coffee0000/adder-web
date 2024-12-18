@@ -1,0 +1,52 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: %(message)s"
+        }
+    },
+
+    "handlers": {
+        "consoleHandler": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+        "timeRotatingFileHandler": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "filename": "/tmp/aoai-chatgpt.log",
+            "encoding": "utf-8",
+            "when": "D",
+            "interval": 1,
+            "backupCount": 30
+        }
+    },
+
+    "loggers": {
+        "__main__": {
+            "level": "INFO",
+            "handlers": ["consoleHandler", "timeRotatingFileHandler"],
+            "propagate": false
+        },
+        "azure.core.pipeline.policies.http_logging_policy": {
+            "level": "WARNING",
+            "handlers": ["consoleHandler", "timeRotatingFileHandler"],
+            "propagate": false
+        },
+        "httpx": {
+            "level": "WARNING",
+            "handlers": ["consoleHandler", "timeRotatingFileHandler"],
+            "propagate": false
+        }
+    },
+
+    "root": {
+        "level": "INFO",
+        "handlers": ["consoleHandler", "timeRotatingFileHandler"],
+        "propagate": false
+    }
+}

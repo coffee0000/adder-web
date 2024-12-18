@@ -1,0 +1,8 @@
+.venv
+frontend/node_modules
+.env
+/static/*
+!/static/favicon.ico
+.azure/
+__pycache__/
+.vscode

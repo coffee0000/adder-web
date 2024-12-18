@@ -1,0 +1,59 @@
+services:
+  keycloak-db-service:
+    image: postgres:15.1-alpine3.17
+    container_name: keycloak-db-service
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: apppass
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks: ['keycloak-network']
+    
+  keycloak-service:
+    image: bitnami/keycloak:22.0.3
+    container_name: "keycloak-service"
+    restart: unless-stopped
+    environment:
+      KEYCLOAK_ADMIN_USER: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+      KEYCLOAK_DATABASE_VENDOR: postgresql
+      KEYCLOAK_DATABASE_HOST: keycloak-db-service
+      KEYCLOAK_DATABASE_PORT: 5432
+      KEYCLOAK_DATABASE_NAME: appdb
+      KEYCLOAK_DATABASE_USER: appuser
+      KEYCLOAK_DATABASE_PASSWORD: apppass
+    ports:
+      - 5668:8080
+    depends_on:
+      - keycloak-db-service
+    networks: ['keycloak-network']
+    
+  adder-web-service:
+    image: adder-web:v1.0.0
+    container_name: adder-web-service
+    environment:
+      TZ: "Asia/Tokyo"
+      KEYCLOAK_BASE_URL: http://keycloak.zgc.com:5668
+      SERVER_BASE_URL: http://adder.zgc.com:5669
+      KEYCLOAK_REALM_NAME: auth-web-test
+      KEYCLOAK_CLIENT_ID: auth-web-test-client
+      KEYCLOAK_CLIENT_SECRET: vuP4TLTJgOG8lRit7LK44X6xMOSwc3lc
+    ports:
+      - 5669:8000
+#    networks: ['adder-web-network']
+    
+    extra_hosts:
+      - keycloak.zgc.com:172.29.98.96
+      - adder.zgc.com:172.29.98.96
+      
+networks: {keycloak-network: {}}
+
+
+
+
+
+
