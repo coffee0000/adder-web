@@ -4,7 +4,7 @@ from starlette.types import ASGIApp
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi import APIRouter, Request
 from starlette.middleware.base import BaseHTTPMiddleware
-from backend.gateway.auth import introspect_token, OAUTH2_URL_USERINFO
+from backend.gateway.auth_router import introspect_token, OAUTH2_URL_USERINFO
 
 logger = getLogger(__name__)
 router = APIRouter()

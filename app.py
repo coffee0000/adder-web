@@ -4,7 +4,7 @@ from logging import getLogger
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from backend.gateway.auth import router as auth_router
+from backend.gateway.auth_router import KEYCLOAK_BASE_URL, router as auth_router
 from backend.gateway.middleware import HttpMiddleware
 from backend.router.biz_router import router as biz_router
 from fastapi.responses import FileResponse, HTMLResponse
@@ -18,10 +18,10 @@ app.include_router(biz_router, prefix="/biz")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=[KEYCLOAK_BASE_URL], 
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["X-Custom-Header", "Authorization"],
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

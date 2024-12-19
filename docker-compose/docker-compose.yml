@@ -10,7 +10,7 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5667:5432
     networks: ['keycloak-network']
     
   keycloak-service:
@@ -37,18 +37,18 @@ services:
     container_name: adder-web-service
     environment:
       TZ: "Asia/Tokyo"
-      KEYCLOAK_BASE_URL: http://keycloak.zgc.com:5668
-      SERVER_BASE_URL: http://adder.zgc.com:5669
-      KEYCLOAK_REALM_NAME: auth-web-test
-      KEYCLOAK_CLIENT_ID: auth-web-test-client
-      KEYCLOAK_CLIENT_SECRET: vuP4TLTJgOG8lRit7LK44X6xMOSwc3lc
+      KEYCLOAK_BASE_URL: http://keycloak.com:5668
+      SERVER_BASE_URL: http://adder.com:5669
+      KEYCLOAK_REALM_NAME: xxx
+      KEYCLOAK_CLIENT_ID: xxx
+      KEYCLOAK_CLIENT_SECRET: xxxxxxxxxxxxx
     ports:
       - 5669:8000
 #    networks: ['adder-web-network']
     
     extra_hosts:
-      - keycloak.zgc.com:172.29.98.96
-      - adder.zgc.com:172.29.98.96
+      - keycloak.zgc.com:172.29.98.xx
+      - adder.zgc.com:172.29.98.xx
       
 networks: {keycloak-network: {}}
 

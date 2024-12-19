@@ -11,13 +11,18 @@
 #### ウェブサービス起動のUrl 
  - `APP_BASE_URL`
 
+### Dockerを使ってプロジェクト実行
+- 1.windows hosts設定追加
+    path:`C:\Windows\System32\drivers\etc\hosts`
 
-### ローカルプロジェクトのデプロイ
+  ```
+  172.19.245.xx        keycloak.zgc.com
+  172.19.245.xx        adder.zgc.com 
+  ```
+  （上記のIPアドレスは、WSLでCMDコマンド「ifconfig」を実行し、その後、eth0の下に表示されるinetのIPアドレスを参照して取得します。）
 
-- 環境変数設定 
-
-- 依頼をインストール　＆　実行  
-  `start.cmd`
+### keyclock設定
+- 【keyclock設定.xlsx】を参照してください。
 
 
 ### Dockerイメージ作成
@@ -41,4 +46,13 @@ services:
         KEYCLOAK_CLIENT_SECRET: xxx
       ports:
         - xxx:8000
+      extra_hosts:
+      - keycloak.zgc.com: 172.19.245.xx
+      - adder.zgc.com: 172.19.245.xx
 ```
+
+
+### ローカル実行 
+- 1.環境変数設定 
+- 2.依頼をインストール　＆　実行  
+    `start.cmd`
